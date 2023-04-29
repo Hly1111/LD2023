@@ -1,18 +1,34 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerTwoController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float moveSpeed=15f;
+    [HideInInspector]public float moveX;
+    [HideInInspector]public float moveY;
+    [HideInInspector]public float faceNum;
 
-    // Update is called once per frame
-    void Update()
+    public Collider2D playerOneCollider;
+    public Rigidbody2D playerOneRigidbody;
+    private void Start()
     {
-        
+        playerOneCollider=GetComponent<Collider2D>();
+        playerOneRigidbody=GetComponent<Rigidbody2D>();
+    }
+    public void Update()
+    {
+        Run();
+    }
+    public void Run(){
+        moveX=Input.GetAxis("Horizontal");
+        moveY=Input.GetAxis("Vertical");
+        playerOneRigidbody.velocity=new Vector2(moveX*moveSpeed,moveY*moveSpeed);
+        faceNum=Input.GetAxisRaw("Horizontal");
+        if(faceNum<0){
+            transform.localScale=new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
+        }
     }
 }
+
