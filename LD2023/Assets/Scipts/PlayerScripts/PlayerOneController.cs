@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerOneController : MonoBehaviour
 {
-    public float moveSpeed;
+    public float moveSpeed=15f;
     [HideInInspector]public float moveX;
     [HideInInspector]public float moveY;
     [HideInInspector]public float faceNum;
@@ -15,6 +15,10 @@ public class PlayerOneController : MonoBehaviour
     {
         playerOneCollider=GetComponent<Collider2D>();
         playerOneRigidbody=GetComponent<Rigidbody2D>();
+    }
+    public void Update()
+    {
+        Run();
     }
     public void Run(){
         moveX=Input.GetAxis("Horizontal");
