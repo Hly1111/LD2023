@@ -19,10 +19,13 @@ public class OrderController : MonoBehaviour
     public bool orderFetched;
     public bool orderFinished;
     public float orderWaitTime;//配送时间
+    public bool isTimeOut;
+    public bool isPlayerOne;
+    public bool isPlayerTwo;
     public float[] orderTimeRestriction = new float[]{
-            100f,
-            150f,
-            200f
+            40f,
+            50f,
+            60f
         };//配送时间限制
 
     private void Start()
@@ -85,7 +88,7 @@ public class OrderController : MonoBehaviour
             orderFinished = true;
             orderWaitTime = 0;
             orderFetched = false;
-            //惩罚
+            isTimeOut = true;
         }
     }
 #endregion
@@ -96,6 +99,16 @@ public class OrderController : MonoBehaviour
             orderFetched = false;
             orderWaitTime=0;
             Destroy(spawnedPrefab);
+            if(other.tag == "PlayerOne"){
+                isPlayerOne = true;
+            }
+            if(other.tag == "PlayerTwo"){
+                isPlayerTwo = true;
+            }
+            else{
+                isPlayerOne = false;
+                isPlayerTwo = false;
+            }
         }
     }
 }

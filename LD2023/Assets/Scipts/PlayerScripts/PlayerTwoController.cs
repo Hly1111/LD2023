@@ -1,34 +1,34 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerTwoController : MonoBehaviour
 {
-    public float moveSpeed=15f;
-    [HideInInspector]public float moveX;
-    [HideInInspector]public float moveY;
-    [HideInInspector]public float faceNum;
+    public GameObject player;//玩家
+    public Vector2 directionVector;//移动方向
+    public float movementSpeed;//移速
+    public Vector2 playerPosition;//玩家位置判定
+    // Start is called before the first frame update
+    void Start()
+    {
+        directionVector = new Vector2(0, 0);
+    }
 
-    public Collider2D playerOneCollider;
-    public Rigidbody2D playerOneRigidbody;
-    private void Start()
+    // Update is called once per frame
+    void Update()
     {
-        playerOneCollider=GetComponent<Collider2D>();
-        playerOneRigidbody=GetComponent<Rigidbody2D>();
-    }
-    public void Update()
-    {
-        Run();
-    }
-    public void Run(){
-        moveX=Input.GetAxis("Horizontal");
-        moveY=Input.GetAxis("Vertical");
-        playerOneRigidbody.velocity=new Vector2(moveX*moveSpeed,moveY*moveSpeed);
-        faceNum=Input.GetAxisRaw("Horizontal");
-        if(faceNum<0){
-            transform.localScale=new Vector3(-transform.localScale.x,transform.localScale.y,transform.localScale.z);
+        directionVector.x = Input.GetAxisRaw("HorizontalTwo");
+        directionVector.y = Input.GetAxisRaw("VerticalTwo");
+        if ((directionVector.x != 0f || directionVector.y != 0f))
+        {
+            CharacterMovement();
         }
+        playerPosition = this.GetComponent<Transform>().position;//移动代码
+    }
+    
+    void CharacterMovement()//移动生效代码
+    {
+        transform.Translate(Vector3.right * directionVector.x * movementSpeed * Time.deltaTime);
+        transform.Translate(Vector3.up * directionVector.y * movementSpeed * Time.deltaTime);
     }
 }
-
