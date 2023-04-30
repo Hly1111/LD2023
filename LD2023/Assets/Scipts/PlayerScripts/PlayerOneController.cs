@@ -9,6 +9,12 @@ public class PlayerOneController : MonoBehaviour
     public float movementSpeed;//移速
     public Vector2 playerPosition;//玩家位置判定
     // Start is called before the first frame update
+    public bool isBagExpand = false;
+    public bool isFastBike = false;
+    public bool isOrderIntercept = false;
+    public bool Upgraded = false;
+    public int bagCapacity=1;
+    public int additionalFood=3;
     void Start()
     {
         directionVector = new Vector2(0, 0);
@@ -24,6 +30,15 @@ public class PlayerOneController : MonoBehaviour
             CharacterMovement();
         }
         playerPosition = this.GetComponent<Transform>().position;//移动代码
+        if(isBagExpand&&!Upgraded){
+            bagCapacity=2;
+            Upgraded=true;
+        }
+        if(isFastBike&&!Upgraded){
+            movementSpeed*=1.2f;
+            Upgraded=true;
+        }
+        
     }
     
     void CharacterMovement()//移动生效代码
